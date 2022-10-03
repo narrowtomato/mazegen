@@ -1,6 +1,9 @@
 import random
 from turtle import Turtle,Screen
+import pygame
 
+# Define colors for drawing
+WHITE = (255,255,255)
 class Maze:
     def __init__(self, width, height):
         # Width and Height of maze
@@ -70,41 +73,29 @@ class Maze:
             robot_visited_forkable.append((robot_x, robot_y))
 
     def draw(self):
-        # Screen and Turtle
-        screen = Screen()
-        t = Turtle()
+        # Initialize Pygame
+        pygame.init()
 
-        # Set speed to 0 (fast), bring the pen up and move to the upper left
-        t.speed(0)
-        t.up()
-        t.goto((-300,300))
+        # Define the screen to draw on
+        screen = pygame.display.set_mode((self.width * 10 + 20, self.height * 10 + 20))
 
         # Loop through all cells and draw walls
         for i in range(self.width):
-            t.goto(-300,(300 - i * 10))
             for j in range(self.height):
-                if format(self.cells[j][i], '#06b')[2] == '1':
-                    t.down()
-                t.forward(10)
-                t.up()
-                t.setheading(270)
-                if format(self.cells[j][i], '#06b')[3] == '1':
-                    t.down()
-                t.forward(10)
-                t.up()
-                t.setheading(180)
-                if format(self.cells[j][i], '#06b')[4] == '1':
-                    t.down()
-                t.forward(10)
-                t.up()
-                t.setheading(90)
-                if format(self.cells[j][i], '#06b')[5] == '1':
-                    t.down()
-                t.forward(10)
-                t.up()
-                t.setheading(0)
-                t.forward(10)
-  
+                # If there's a top line
+                if format(self.cells[i][j], '#06b')[2] == '1':
+                    pygame.draw.line(screen, WHITE, (i * 10 + 10, j * 10 + 10), (i * 10 + 20, j * 10 + 10))
+                # If there's a right line
+                if format(self.cells[i][j], '#06b')[3] == '1':
+                    pygame.draw.line(screen, WHITE, (i * 10 + 20, j * 10 + 10), (i * 10 + 20, j * 10 + 20))
+                # If there's a bottom line
+                if format(self.cells[i][j], '#06b')[4] == '1':
+                    pygame.draw.line(screen, WHITE, (i * 10 + 20, j * 10 + 20), (i * 10 + 10, j * 10 + 20))
+                # If there's a left line
+                if format(self.cells[i][j], '#06b')[5] == '1':
+                    pygame.draw.line(screen, WHITE, (i * 10 + 10, j * 10 + 20), (i * 10 + 10, j * 10 + 10))
 
-        # Exit when the screen is clicked
-        screen.exitonclick()
+        # Display, wait 10 seconds, then exit
+        pygame.display.flip()
+        pygame.time.wait(10000)
+        pygame.quit()
