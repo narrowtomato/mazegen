@@ -3,6 +3,7 @@ import pygame
 
 # Define colors for drawing
 WHITE = (255,255,255)
+
 class Maze:
     def __init__(self, width, height):
         # Width and Height of maze
