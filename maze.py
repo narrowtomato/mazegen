@@ -1,5 +1,4 @@
 import random
-from turtle import Turtle,Screen
 import pygame
 
 # Define colors for drawing
